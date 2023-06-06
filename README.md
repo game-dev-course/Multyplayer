@@ -1,9 +1,14 @@
-<div dir='rtl' lang='he'>
+# Multyplayer
 
-# Multiplayer games using Photon Fusion
+Version Unity : 2021.3.18f1
 
-Code based on the [Fusion Shared Mode Tutorial](https://doc.photonengine.com/fusion/current/tutorials/shared-mode-basics/overview).
+Itch.io: [https://galkoaz.itch.io/bettertogether](https://galkoaz.itch.io/bettertogether)
+
+Movement Keyboard Arrows: Left, Right, Down, Left
+Jump: Space
+Shoot: Left Mouse Click
+
+Object: Shield give you the ability to dont get shoots.
 
 
-
-</div>
+<img src="https://i.ibb.co/8KzNFKw/Untitled.png" alt="Untitled" border="0" />
