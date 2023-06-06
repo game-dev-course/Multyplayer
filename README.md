@@ -2,7 +2,7 @@
 
 Version Unity : 2021.3.18f1
 
-Itch.io: [https://galkoaz.itch.io/bettertogether](https://galkoaz.itch.io/bettertogether)
+Itch.io: [https://galkoaz.itch.io/bettertogether](https://galkoaz.itch.io/multyplayer)
 
 Movement Keyboard Arrows: Left, Right, Down, Left
 Jump: Space
