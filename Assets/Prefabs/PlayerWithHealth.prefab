@@ -692,7 +692,7 @@ MonoBehaviour:
       m_Action: Attack Location
       m_Flags: 0
     m_Flags: 0
-  killBonus: 5
+  killBonus: 1
   shootDistance: 999
 --- !u!54 &-8101572477815358149
 Rigidbody:
@@ -747,7 +747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3048528467489158986
 Transform:
   m_ObjectHideFlags: 0

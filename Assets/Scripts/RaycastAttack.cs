@@ -9,7 +9,7 @@ public class RaycastAttack : NetworkBehaviour {
 
     [SerializeField] InputAction attack;
     [SerializeField] InputAction attackLocation;
-    [SerializeField] private int killBonus = 5;
+    [SerializeField] private int killBonus = 1;
     [SerializeField] float shootDistance = 10f;
     
     public bool HasShield { get; set; }
@@ -36,12 +36,12 @@ public class RaycastAttack : NetworkBehaviour {
         if (attack.WasPerformedThisFrame()) {
             Vector2 attackLocationInScreenCoordinates = attackLocation.ReadValue<Vector2>();
 
-            //var camera = Camera.main;
-            Camera camera = this.gameObject.GetComponentInChildren<Camera>();
+            var camera = Camera.main;
+            // Camera camera = this.gameObject.GetComponentInChildren<Camera>();
             Ray ray = camera.ScreenPointToRay(attackLocationInScreenCoordinates);
             //ray.origin = this.gameObject.transform.position;
-
-            Debug.DrawRay(ray.origin, ray.direction * shootDistance, Color.red, 10);
+            float drawRayDuration = 10f;  // Time for the raw to disappear.
+            Debug.DrawRay(ray.origin, ray.direction * shootDistance, Color.red, drawRayDuration);
             
             if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction * shootDistance, out var hit)) {
                 GameObject hitObject = hit.transform.gameObject;

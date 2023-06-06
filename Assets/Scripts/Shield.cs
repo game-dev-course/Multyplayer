@@ -6,19 +6,15 @@ using UnityEngine;
 
 public class Shield : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     [Networked(OnChanged = nameof(NetworkShieldTouchedChanged))]
     public bool NetworkShieldTouched { get; set; }
-    private static void NetworkShieldTouchedChanged(Changed<Shield> changed) {
+
+    private static void NetworkShieldTouchedChanged(Changed<Shield> changed)
+    {
         changed.Behaviour.ShiftShield();
-        
+
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.tag);
@@ -32,14 +28,8 @@ public class Shield : NetworkBehaviour
 
     private void ShiftShield()
     {
-        gameObject.transform.position += new Vector3(1000, 0, 0);
+        // Create vector3 to shift the cube far from the map.
+        int offset = 1000;
+        gameObject.transform.position += new Vector3(offset, offset, offset);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-    
 }
