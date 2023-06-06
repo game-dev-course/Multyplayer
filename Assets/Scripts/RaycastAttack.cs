@@ -1,3 +1,4 @@
+
 using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,9 +9,11 @@ public class RaycastAttack : NetworkBehaviour {
 
     [SerializeField] InputAction attack;
     [SerializeField] InputAction attackLocation;
-
-    [SerializeField] float shootDistance = 5f;
-
+    [SerializeField] private int killBonus = 5;
+    [SerializeField] float shootDistance = 10f;
+    
+    public bool HasShield { get; set; }
+    
     private void OnEnable() { attack.Enable(); attackLocation.Enable();  }
     private void OnDisable() { attack.Disable(); attackLocation.Disable(); }
     void OnValidate() {
@@ -25,7 +28,7 @@ public class RaycastAttack : NetworkBehaviour {
         if (attackLocation.bindings.Count == 0)
             attackLocation.AddBinding("<Mouse>/position");
     }
-
+    
 
     void Update() {
         if (!HasStateAuthority)  return;
@@ -34,15 +37,16 @@ public class RaycastAttack : NetworkBehaviour {
             Vector2 attackLocationInScreenCoordinates = attackLocation.ReadValue<Vector2>();
 
             //var camera = Camera.main;
-            var camera = this.gameObject.GetComponent<Camera>();
+            Camera camera = this.gameObject.GetComponentInChildren<Camera>();
             Ray ray = camera.ScreenPointToRay(attackLocationInScreenCoordinates);
-            ray.origin += camera.transform.forward;
+            //ray.origin = this.gameObject.transform.position;
 
-            Debug.DrawRay(ray.origin, ray.direction * shootDistance, Color.red);
-
+            Debug.DrawRay(ray.origin, ray.direction * shootDistance, Color.red, 10);
+            
             if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction * shootDistance, out var hit)) {
                 GameObject hitObject = hit.transform.gameObject;
-                if (hitObject.GetInstanceID() != this.gameObject.GetInstanceID())
+                RaycastAttack hitObjectRayCastAttack = hitObject.GetComponent<RaycastAttack>();
+                if (hitObject.GetInstanceID() != this.gameObject.GetInstanceID() && !hitObjectRayCastAttack.HasShield)
                 {
                     Debug.Log("Raycast hit: name="+ hitObject.name+" tag="+hitObject.tag+" collider="+hit.collider);
                     
@@ -54,11 +58,12 @@ public class RaycastAttack : NetworkBehaviour {
                         }
                         Debug.Log("Dealing damage");
                         health.DealDamageRpc(Damage);
+                        this.gameObject.GetComponent<Health>().NetworkedHealth += killBonus;
                     }
                 }
+                
             }
         }
     }
-
 
 }
